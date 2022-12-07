@@ -96,14 +96,24 @@ ctx.clearRect(50, 60, 70, 80);
     Enfin ajouter la vitesse vertical à la position Y et la vitesse horizontale à la position X
 */
 let x = 100, y=100, vv= 5, vh = 5, r= 80;
+/* 
+    "getImageData" permet de récupérer un objet contenant les données 
+    des pixels dans le rectangle donné en argument.
+    position x, position y, largeur, hauteur.
+
+    Inversement "putImageData" permet en prenant l'objet précédement créé 
+    en argument de redessiner le rectangle sauvegardé.
+*/
+let snapshot = ctx.getImageData(0,0, canvas.width, canvas.height)
 function cercle()
 {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // ctx.beginPath()
-    // ctx.arc(x, y, r, 0, Math.PI*2);
-    // ctx.fill();
-    // ctx.stroke();
-    ctx.drawImage(img, x,y, r, r)
+    ctx.putImageData(snapshot, 0, 0)
+    ctx.beginPath()
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    // ctx.drawImage(img, x,y, r, r)
     if(x+r > canvas.width || x-r <0)
         vh = -vh;
     if(y+r > canvas.height || y-r <0)
@@ -113,7 +123,7 @@ function cercle()
     // requestAnimationFrame va appeler la fonction donné en argument au rythme optimal pour une animation.
     requestAnimationFrame(cercle);
 }
-// cercle()
+cercle()
 // ------------------------ images ---------------------
 // Je crée un nouvel objet image
 let img = new Image();
